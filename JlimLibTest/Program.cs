@@ -9,7 +9,6 @@ internal class Program
     private static void Main(string[] args)
     {
         string contents = "Hello there, <br />This is Derek";
-        EmailManager emg = new();
         EmailManager.Send("receiver@test.com", "Hi...", contents);
 
     }

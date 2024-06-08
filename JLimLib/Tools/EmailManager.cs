@@ -14,12 +14,12 @@ namespace JLimLib.Tools
         internal static IConfiguration Config { get; private set; }
 
         //객체없이 사용 가능하게 static function 생성
-        public static void Send(string to, string subject, string contents) 
+        public static void Send(string to, string subject, string contents)
         {
-            if(Config is null)
+            if (Config is null)
             {
                 Config = new ConfigurationBuilder()
-                .AddJsonFile("C:\\Users\\LABTOP_PNE1075\\Desktop\\임시\\Library_Lecture\\LibraryStudy\\JlimLibTest\\appsettings.json")
+                .AddJsonFile("appsettings.json")
                 .Build();
             }
             if (Config.GetSection("SMTP") == null)
@@ -33,9 +33,9 @@ namespace JLimLib.Tools
             string smtpHost = Config.GetSection("SMTP")["SMTPHost"]; // 메일을 실제로 보내주는 서버 도메인명.
 
             int smtpPort = 0;
-            if (Config.GetSection("SMTP")["SMTPPort"] == null || int.TryParse(Config.GetSection("SMTP")["SMTPPort"], out smtpPort) == false)
-            {
-                smtpPort = 25; //원래는 default port는 25.
+            if(Config.GetSection("SMTP")["SMTPPort"] == null ||
+                int.TryParse(Config.GetSection("SMTP")["SMTPPort"], out smtpPort) == false){
+                smtpPort = 25;
             }
             //host명과 port로 아무나 가서 메일을 보내면 안됨. 예) 스팸.
             //보통 메일 서버는 메일 요청을 하는 프로그램이 인증된 것인지 확인. -> id, password
