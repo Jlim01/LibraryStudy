@@ -10,7 +10,8 @@ internal class Program
     {
         string contents = "Hello there, <br />This is Derek";
         EmailManager.Send("receiver@test.com", "Hi...", contents);
-
+        EmailManager.Send("from@test.com", "receiver@test.com", "Hi...", contents);
+        EmailManager.Send("from@test.com", "receiver@test.com", "Hi...", contents, "cc@test.com", "bcc@test.com");
     }
 
     void Ex01()
