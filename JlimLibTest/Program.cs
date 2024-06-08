@@ -1,5 +1,17 @@
-﻿using JLimLib.Tools;
+﻿using JLimLib.Extensions;
+using JLimLib.Tools;
 
+//#2  확장메서드 사용
+string temp = "2024-12-02";
+Console.WriteLine("IsNumeric? " + temp.IsNumeric());
+Console.WriteLine("IsDateTime? " + temp.IsDataTime());
+
+
+
+
+
+return;
+//#1
 LogManager logManager = new LogManager(null, "_JlimText");//prefix , postfix
 logManager.WriteLine("Begin Processing...");
 for(int idx = 0; idx < 10; ++idx)
@@ -10,8 +22,23 @@ for(int idx = 0; idx < 10; ++idx)
 }
 logManager.WriteLine("End Processing");
 
-logManager.WriteConsole("test");  //마치 LogManager 클래스 내부 메서드 처럼 해당 클래스 외부에 있는 확장메서드를 사용할 수 있다.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+logManager.WriteConsole("test");  //마치 LogManager 클래스 내부 메서드 처럼 해당 클래스 외부에 있는 확장메서드를 사용할 수 있다.
 //확장메서드는 static class 안에서 static function으로 선언되야한다.
 public static class ExtensionTest
 {
@@ -21,3 +48,4 @@ public static class ExtensionTest
         Console.Write(data);
     }
 }
+*/
