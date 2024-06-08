@@ -1,26 +1,44 @@
 ﻿using JLimLib.Extensions;
 using JLimLib.Tools;
+using Microsoft.Extensions.Configuration;
 
-//#2  확장메서드 사용
-string temp = "2024-12-02";
-Console.WriteLine("IsNumeric? " + temp.IsNumeric());
-Console.WriteLine("IsDateTime? " + temp.IsDataTime());
-
-
-
-
-
-return;
-//#1
-LogManager logManager = new LogManager(null, "_JlimText");//prefix , postfix
-logManager.WriteLine("Begin Processing...");
-for(int idx = 0; idx < 10; ++idx)
+internal class Program
 {
-    logManager.WriteLine($"Processing ---  {idx}");
-    System.Threading.Thread.Sleep(500);
-    logManager.WriteLine($"Done -- {idx}");
+
+
+    private static void Main(string[] args)
+    {
+        string contents = "Hello there, <br />This is Derek";
+        EmailManager emg = new();
+        EmailManager.Send("receiver@test.com", "Hi...", contents);
+
+    }
+
+    void Ex01()
+    {
+        LogManager logManager = new LogManager(null, "_JlimText");//prefix , postfix
+        logManager.WriteLine("Begin Processing...");
+        for (int idx = 0; idx < 10; ++idx)
+        {
+            logManager.WriteLine($"Processing ---  {idx}");
+            System.Threading.Thread.Sleep(500);
+            logManager.WriteLine($"Done -- {idx}");
+        }
+        logManager.WriteLine("End Processing");
+    }
+
+    void Ex02()
+    {
+        //#2  확장메서드 사용
+        string temp = "2024-12-02";
+        Console.WriteLine("IsNumeric? " + temp.IsNumeric());
+        Console.WriteLine("IsDateTime? " + temp.IsDataTime());
+    }
+
+
+
+
 }
-logManager.WriteLine("End Processing");
 
 
 
