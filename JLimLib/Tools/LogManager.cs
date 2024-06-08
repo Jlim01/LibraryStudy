@@ -86,6 +86,13 @@ namespace JLimLib.Tools
             catch (Exception ex) { }
 
         }
+
+        //확장메서드
+        //public void WriteConsole(string data)
+        //{
+        //    Write(data);
+        //    Console.Write(data);
+        //}
         #endregion
     }
 }
