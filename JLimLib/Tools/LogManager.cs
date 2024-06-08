@@ -13,18 +13,25 @@ namespace JLimLib.Tools
         private string _path;
 
         #region Constructors
-        public LogManager(string path, LogType logType)
+        public LogManager(string path, LogType logType, string prefix, string postfix)
         {
             _path = path;
-            _SetLogPath(logType);
+            _SetLogPath(logType, prefix, postfix);
         }
-        public LogManager() : this(Path.Combine(Application.Root, "Log"), LogType.Daily)
+
+        public LogManager(string prefix, string postfix)
+            : this(Path.Combine(Application.Root, "Log"), LogType.Daily, prefix, postfix) // prefix와 postfix만 받아들이는 생성자.
+        {
+
+        }
+
+        public LogManager() : this(Path.Combine(Application.Root, "Log"), LogType.Daily, null, null)
         { }
 
         #endregion
 
         #region Methods
-        private void _SetLogPath(LogType logType)
+        private void _SetLogPath(LogType logType, string prefix, string postfix)
         {
             string path = String.Empty; // 로그파일이 저장될 루트경로의 중간 경로.
             string name = String.Empty;
@@ -33,11 +40,11 @@ namespace JLimLib.Tools
             {
                 case LogType.Daily:
                     path = String.Format(@"{0}\{1}\", DateTime.Now.Year, DateTime.Now.ToString("MM"));
-                    name = DateTime.Now.ToString("yyyyMMdd") + ".txt";
+                    name = DateTime.Now.ToString("yyyyMMdd");
                     break;
                 case LogType.Monthly:
                     path = String.Format(@"{0}\", DateTime.Now.Year);
-                    name = DateTime.Now.ToString("yyyyMM") + ".txt";
+                    name = DateTime.Now.ToString("yyyyMM");
                     break;
             }
 
@@ -45,6 +52,13 @@ namespace JLimLib.Tools
 
             if (!Directory.Exists(_path))
                 Directory.CreateDirectory(_path);
+
+            //하나의 폴더 안에있는 log파일에서 여러 파일들의 종료에 따라 구분하기 위해 postfix 또는 prefix를 붙인다.
+            if(!String.IsNullOrEmpty(prefix))
+                name = prefix + name;
+            if (!String.IsNullOrEmpty(postfix))
+                name = name + postfix;
+            name += ".txt";
 
             _path = Path.Combine(_path, name); // 파일 명까지 들어간 full 경로.
 
