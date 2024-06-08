@@ -11,9 +11,60 @@ namespace JLimLib.Tools
 {
     public class EmailManager
     {
+        private MailMessage _MailMessage;
+        private SmtpClient _SmtpClient;
+
+        public EmailManager(string host, int port, string id, string password)
+        {
+            _SmtpClient = new SmtpClient(host, port);
+            _SmtpClient.Credentials = new NetworkCredential(id, password);
+            //_SmtpClient.EnableSsl = true;
+            
+            _MailMessage = new MailMessage();
+            _MailMessage.IsBodyHtml = true;
+            _MailMessage.Priority = MailPriority.Normal;
+
+            //첨부파일
+            //_MailMessage.Attachments.Add(new Attachment(첨부파일 경로));
+        }
+
+        public string From
+        {
+            get { return _MailMessage.From  == null? string.Empty : _MailMessage.From.Address; }
+            set { _MailMessage.From = new MailAddress(value);}
+        }
+
+        public MailAddressCollection To
+        {
+            get { return _MailMessage.To; }  //_MailMessage.To는 get만 정의됨, collection이라서 get으로 메서드를 받아서 거기에 Add로 멤버추가하면되니 set필요없음.
+        }
+
+        public MailAddressCollection CC
+        {
+            get { return _MailMessage.CC; }  
+        }
+
+        public MailAddressCollection Bcc
+        {
+            get { return _MailMessage.Bcc; }  
+        }
+
+        public string Subject
+        {
+            get { return _MailMessage.Subject;}
+            set { _MailMessage.Subject = value;}
+        }
+        public string Body
+        {
+            get { return _MailMessage.Body; }
+            set { _MailMessage.Body = value;}
+        }
+
+        public void Send()
+        {
+            _SmtpClient.Send(_MailMessage);
+        }
         internal static IConfiguration Config { get; private set; }
-
-
         #region Static Method
         //객체없이 사용 가능하게 static function 생성                 cc 참조,  bcc 숨은참조
         public static void Send(string from, string to, string subject, string contents, string cc, string bcc)  // 보내는 사람이 매개변수로 들어오니 config로부터 sender를 읽어올 필요없음/

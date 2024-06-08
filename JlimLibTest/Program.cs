@@ -8,10 +8,30 @@ internal class Program
 
     private static void Main(string[] args)
     {
+
+
         string contents = "Hello there, <br />This is Derek";
-        EmailManager.Send("receiver@test.com", "Hi...", contents);
-        EmailManager.Send("from@test.com", "receiver@test.com", "Hi...", contents);
-        EmailManager.Send("from@test.com", "receiver@test.com", "Hi...", contents, "cc@test.com", "bcc@test.com");
+        //EmailManager.Send("receiver@test.com", "Hi...", contents);
+        //EmailManager.Send("from@test.com", "receiver@test.com", "Hi...", contents);
+        //EmailManager.Send("from@test.com", "receiver@test.com", "Hi...", contents, "cc@test.com", "bcc@test.com");
+
+        //EmailManager 객체로 서버 설정.
+        //장점: EmailManager를 사용하는 유저 입장에서 MailMessage, SmtpClient, NetworkCredential등 사용할 필요없이 간소하게 사용할 수 있음.
+        //EmailManager 안에 MailMessage와 SmtpClient 로직이 구성됨.
+        EmailManager email = new EmailManager("smtp.com", 25, "id", "password");
+        email.From = "sender@test.com";
+        email.To.Add("receiver@test.com");
+        email.Subject = "Subject";
+        email.Body = contents;
+        email.Send();
+
+        //보내는 사람이 바뀌면 From을 바꿔주면 되나 받는 사람이 바뀐다면 email들어간 To를 클리어
+        email.To.Clear();
+        email.To.Add("receiver2@test.com");
+        email.Subject = "Hi Desker";
+        email.Send();
+
+
     }
 
     void Ex01()
